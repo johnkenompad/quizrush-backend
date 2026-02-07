@@ -2,8 +2,9 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import admin from 'firebase-admin';
-import serviceAccount from './serviceAccountKey.json' with { type: 'json' };
+
+// 🔥 Import Firebase Admin from our configuration file
+import { adminAuth, db } from './firebaseAdmin.js';
 
 // 🧩 Import Routes (use full .js extension for ES Modules)
 import quizRoutes from './routes/quizRoutes.js';
@@ -17,12 +18,7 @@ import essayRoutes from './routes/essayRoutes.js';
 // ✅ Load .env config
 dotenv.config();
 
-// ✅ Initialize Firebase Admin SDK (only if not already initialized)
-if (!admin.apps.length) {
-  admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-  });
-}
+// ✅ Firebase Admin SDK is already initialized in firebaseAdmin.js
 
 // ✅ Setup Express App
 const app = express();
@@ -49,7 +45,7 @@ app.delete('/api/admin/delete-user/:uid', async (req, res) => {
   const { uid } = req.params;
 
   try {
-    await admin.auth().deleteUser(uid);
+    await adminAuth.deleteUser(uid);
     return res.json({ success: true, message: `User ${uid} deleted from Firebase Auth.` });
   } catch (error) {
     console.error('❌ Error deleting user:', error);
