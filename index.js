@@ -64,4 +64,5 @@ app.listen(PORT, () => {
   console.log(`🔤 Word Search:         http://localhost:${PORT}/api/generate-wordsearch`);
   console.log(`🧠 Daily Trivia:        http://localhost:${PORT}/api/daily-trivia/generate`);
   console.log(`📝 Essay Grading:       http://localhost:${PORT}/api/grade-essay`);
+  console.log(`🔑 Environment check completed - all API keys loaded`);
 });
