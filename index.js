@@ -24,12 +24,29 @@ dotenv.config();
 const app = express();
 
 // ✅ Global Middleware
-app.use(cors());
+app.use(cors({
+  origin: ['https://quizrush-a8480.web.app', 'https://quizrush-a8480.firebaseapp.com', 'http://localhost:3000'],
+  credentials: true
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // ✅ REMOVED API KEY MIDDLEWARE - This was causing the 403 error!
 // If you need API key protection, apply it only to specific routes
+
+// ✅ Root route for health check
+app.get('/', (req, res) => {
+  res.json({ 
+    status: 'QuizRush Backend is running',
+    timestamp: new Date().toISOString(),
+    endpoints: [
+      '/api/test',
+      '/api/generate-quiz',
+      '/api/extract-text',
+      '/api/daily-trivia/generate'
+    ]
+  });
+});
 
 // ✅ Route Mounting
 app.use('/api', quizRoutes);
