@@ -25,7 +25,7 @@ const app = express();
 
 // ✅ Global Middleware
 app.use(cors({
-  origin: ['https://quizrush-a8480.web.app', 'https://quizrush-a8480.firebaseapp.com', 'http://localhost:3000'],
+  origin: ['https://capstone-deploy-2026.web.app', 'https://capstone-deploy-2026.firebaseapp.com', 'http://localhost:3000'],
   credentials: true
 }));
 app.use(express.json());

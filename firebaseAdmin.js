@@ -5,6 +5,12 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
+const missingVars = ['FIREBASE_PROJECT_ID', 'FIREBASE_PRIVATE_KEY', 'FIREBASE_CLIENT_EMAIL']
+  .filter((v) => !process.env[v]);
+if (missingVars.length > 0) {
+  throw new Error(`Missing required Firebase env vars: ${missingVars.join(', ')}. Set them in Railway Variables.`);
+}
+
 if (!getApps().length) {
   admin.initializeApp({
     credential: admin.credential.cert({
